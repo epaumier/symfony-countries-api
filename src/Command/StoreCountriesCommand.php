@@ -63,6 +63,15 @@ class StoreCountriesCommand extends Command
                 //turning the string into an object, for inserting into entity
                 $country = json_decode($country);
                 
+                //Validation code block. if the country name is not long enough, or the code is more
+                //or less than 2 characters. a string is returned and the command stops here.
+                if ( strlen($country->name < 2) && strlen($country->code = 2)) {
+                    continue;
+                } else {
+                    $output->write('The file is not formatted correctly: Country name is not long enough, or country code is more or less than 2 characters');    
+                    return 0;
+                }
+                
                 //after creating new entity, insert data
                 $newCountry = new Country();
                 $newCountry->setName($country->name);
