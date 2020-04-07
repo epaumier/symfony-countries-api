@@ -9,15 +9,15 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class StoreCountriesCommandPhpCommand extends Command
+class StoreCountriesCommand extends Command
 {
-    protected static $defaultName = 'StoreCountriesCommand.php';
+    protected static $defaultName = 'store-countries';
 
     protected function configure()
     {
         $this
             ->setDescription('Add a short description for your command')
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
+            ->addArgument('filepath', InputArgument::OPTIONAL, 'path to the file containing the countries')
             ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
         ;
     }
@@ -25,10 +25,11 @@ class StoreCountriesCommandPhpCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
+        $filepath = $input->getArgument('filepath');
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
+        if ($filepath) {
+            $content = file_get_contents($filepath);
+            $io->note(sprintf('You passed an argument: %s', $filepath));
         }
 
         if ($input->getOption('option1')) {
